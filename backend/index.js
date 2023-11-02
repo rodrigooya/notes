@@ -13,36 +13,37 @@ const requestLogger = (request, response, next) => {
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
+
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
+app.use(requestLogger)
 
 let notes = [  
     {    
         id: 1,    
-        content: "HTML is easy",    
-        date: "2019-05-30T17:30:31.098Z",    
+        content: "HTML is easy",       
         important: true  
     },  
     {    
         id: 2,    
-        content: "Browser can execute only Javascript",    
-        date: "2019-05-30T18:39:34.091Z",    
+        content: "Browser can execute only Javascript",       
         important: false  
     },  
     {    
         id: 3,    
-        content: "GET and POST are the most important methods of HTTP protocol",    
-        date: "2019-05-30T19:20:14.298Z",    
+        content: "GET and POST are the most important methods of HTTP protocol",      
         important: true  
     }
 ]
 
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World!</h1>')
+
+app.get('/', (req, res) => {
+    res.send('<h1>Hello World!</h1>')
 })
   
-app.get('/api/notes', (request, response) => {
-    response.json(notes)
+app.get('/api/notes', (req, res) => {
+    res.json(notes)
 })
 
 const generateId = () => {
